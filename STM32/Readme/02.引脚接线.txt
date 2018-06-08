@@ -1,0 +1,40 @@
+【附录1】 GPIO分配表
+  按GPIO次序排列, 一共37个GPIO。GPIOA – GPIOC 每组16根。
+    PA0/ 
+    PA1/                                
+    PA2/USART2_TXD                              串口2发送，连接WiFi(ESP8266)模块--RX
+    PA3/USART2_RXD                              串口2接收，连接WiFi(ESP8266)模块--TX
+    PA4/ADC1_Channe4                          	模/数转换，MQ-2气体传感器--AO
+    PA5/ADC1_Channe5 						    模/数转换，光敏传感器--AO
+    PA6/ADC1_Channe6                            模/数转换，雨滴传感器--AO
+    PA7/ADC1_Channe7                            模/数转换，预留
+    PA8/                               
+    PA9/USART1_TX                               串口1发送，调试串口
+    PA10/USART1_RX                              串口1接收，调试串口
+    PA11/USBDM                                  全速(12Mbps)USB接口数据线D-
+    PA12/USBDP                                  全速(12Mbps)USB接口数据线D+
+    PA13/JTMS-SWDIO                             SWD调试接口数据线
+    PA14/JTCK-SWCLK                             SWD调试接口时钟线
+    PA15/SteeringEngine                         
+
+    PB0/I2C                                    	集成电路总线,接DHT12--SCL
+    PB1/I2C                                   	集成电路总线,接DHT12--SDA
+    PB2-BOOT1			                        BOOT1
+    PB3/JTDO-SWO			                    SWD调试接口
+    PB4/                               
+    PB5/                               			ESP8266_RESET
+    PB6/                               			LED2
+    PB7/                               			LED3
+    PB8/										LED4
+    PB9/										LED5
+    PB10/USART3_TX                              串口3发送
+    PB11/USART3_RX                              串口3接收，接PM2.5模块--TX
+    PB12/
+    PB13/
+    PB14/
+    PB15/
+
+    PC0--PC12									未引出
+    PC13/                               		
+    PC14-OSC32_IN                               32768Hz时钟输入
+    PC15-OSC32_OUT                              32768Hz时钟输出

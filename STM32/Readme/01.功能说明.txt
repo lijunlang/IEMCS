@@ -1,0 +1,89 @@
+
+【1】CPU内部资源
+	CPU型号        : STM32F103CBT6 / LQFP-144 / ARM 32-bit Cortex-M3
+	主频           : 72MHz
+	内部Flash容量  : 128KB
+	内部SRAM容量   : 20KB
+	定时器         : 7个
+	DMA控制器      : 7通道
+	UART           : 3个
+	SPI            : 2个 (2个可复用为I2S)
+	I2C            : 2个
+	ADC            : 3个独立的12位ADC
+	DAC            : 2路独立12位DAC
+	CAN            : 1个 CAN 2.0B 主动
+	SDIO           : 1个
+	USB            : USB2.0全速(从机)无需外部PHY。
+	
+	
+【2】FSMC存储器地址分配
+   	CPU内部 FLASH  【0x0800 0000 - 0x080F FFFF】,容量512K(0x80000)字节
+	CPU内部 SRAM1  【0x2000 0000 - 0x2000 FFFF】,容量64K(0x10000)字节
+	
+
+【3】I2C总线外设地址分配
+  序号	器件                      地址
+	1	串行EEPROM  AT24C02 	  0xA0
+	2   温湿度传感器 DHT12         0xB8
+
+
+【4】开发工具
+    【仿真器】
+	虽然STM32支持串口ISP下载程序，但是不支持在线调试。使用串口下载，开发效率极低，因此强烈推荐使用一个仿真
+	器，提高开发效率。
+	- ST-LINK V2 仿真器: ST公司开发的仿真器，可以下载程序和调试跟踪程序。支持STM8和STM32。
+	
+    【Micro USB线】
+	- 最小开发板预留一个Micro USB接口，通过CH340芯片接在stm32芯片USART1接口上，可用于大部分程序打印调试信息。
+	
+    【开发软件】
+	- 编译环境 KEIL 的 MDK uVision5.24
+	
+【5】编译和调试方法
+
+	【Keil MDK】V5.24
+		- 执行菜单 Project -> Open project                 打开 ...\stm32f103.uvprojx （这是工程文件）
+ 		- 执行菜单 Project -> Rebuild all target files     重新编译所有的文件:
+ 		- 执行菜单 Flash -> Download (F8)                  下载程序到开发板运行
+
+
+【6】文件夹及重要源代码功能说明
+├─core : 				官方库文件
+├─FreeRTOS :			实时内核
+│	├─include :		包含了实时内核
+│	└─portable :		包含特定的文件特定的微控制器或编译器
+├─EDP : 				EDP协议处理函数
+├─fwlib : 			存放第3方提供的库或其源代码
+│	├─inc :			STM32F10X系列MCU的标准固件库头文件
+│	└─src :			STM32F10X系列MCU的标准固件库源代码
+├─hardware : 			存放自己编写的源代码
+│	├─inc :			头文件
+│	└─src :			源代码
+│		├─led.c		LED初始化，亮灭LED
+│		├─delay.c		延时
+│		├─usart.c		串口外设初始化，格式化打印
+│		├─iwdg.c		独立看门狗初始化、喂狗
+│		├─info.c		SSID、PSWD、DEVID、APIKEY保存及读取
+│		├─selfcheck	外接设备检测
+│		├─hwtimer.c	单片机定时器初始化
+│		├─DHT12.c		完成DHT12初始化、温湿度采集
+│		├─myiic		自定义IIC配置
+│		├─at4c02.c	EEPROM读写
+│		├─i2c			软件IIC总线IO初始化，读写控制
+│		├─pm2.5.c		UART3初始化、PM2.5浓度采集
+│		├─HC-SR501.c	人体红外感应驱动
+│		├─bsp_adc.c	ADC-DMA初始化
+│		└─adc_sensor.c获取ADC传感器数据
+├─user : 				存放自己编写的主函数
+│	└─main.c			完成单片机初始化、外接IC初始化和任务的创建及运行
+├─NET : 				网络协议
+│	├─device :		网络设备层
+│	│	├─net_device.c网络设备-WiFi设置		
+│	│	└─net_io.c	网络设备数据IO层
+│	└─protocol :		协议应用层
+│		├─fault.c		网络状态错误处理
+│		└─onenet.c	与onenet平台的数据交互，协议层
+├─output : 			编译输出HEX
+└─Readme :			说明文件
+
+
